@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PatientsModule } from './patients/patients.module';
 import configuration from './config/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from './users/users.module';
+import { LibModule } from './lib/lib.module';
 
 @Module({
   imports: [
@@ -19,7 +21,9 @@ import { MongooseModule } from '@nestjs/mongoose';
         dbName: configService.get<string>("database.name")
       })
     }),
-    PatientsModule
+    PatientsModule,
+    UsersModule,
+    LibModule
   ],
   controllers: [AppController],
   providers: [AppService],

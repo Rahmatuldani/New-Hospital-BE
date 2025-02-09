@@ -3,13 +3,16 @@ import { AppService } from './app.service';
 import { PatientsService } from './patients/patients.service';
 import { faker } from '@faker-js/faker';
 import { CreatePatientDto } from './patients/dto/create-patient.dto';
-import { BloodType, PaymentMethod, Religion, Gender } from './config/types';
+import { BloodType, PaymentMethod, Religion, Gender, Role } from './config/types';
+import { CreateUserDto } from './users/dto/create-user.dto';
+import { UsersService } from './users/users.service';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly patientService: PatientsService
+    private readonly patientService: PatientsService,
+    private readonly usersService: UsersService 
   ) {}
 
   @Get()
@@ -41,5 +44,23 @@ export class AppController {
     }
 
     return 'Generate patients data success'
+  }
+  
+  @Get("generateUsers/:sample")
+  async generateUsers(@Param('sample') sample: string) {
+    for (let index = 0; index < +sample; index++) {
+      const user: CreateUserDto = {
+        email: faker.internet.email(),
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        birthDate: faker.date.birthdate(),
+        birthPlace: faker.location.city(),
+        gender: faker.helpers.arrayElement(Object.values(Gender)),
+        role: faker.helpers.arrayElement(Object.values(Role)),
+      }
+      await this.usersService.create(user)
+    }
+
+    return 'Generate users data success'
   }
 }
