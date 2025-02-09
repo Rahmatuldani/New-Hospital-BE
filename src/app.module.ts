@@ -7,6 +7,7 @@ import configuration from './config/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { LibModule } from './lib/lib.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { LibModule } from './lib/lib.module';
     }),
     PatientsModule,
     UsersModule,
-    LibModule
+    LibModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

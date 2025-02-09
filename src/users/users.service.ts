@@ -31,7 +31,11 @@ export class UsersService {
   }
 
   findByEmail(email: string) {
-    return this.userModel.findOne({email: email}).lean().exec()
+    return this.userModel.findOne({email: email}).exec()
+  }
+  
+  findByNP(np: string) {
+    return this.userModel.findOne({np: np}).lean().exec()
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
