@@ -19,4 +19,12 @@ export class PatientsGateway {
   handleCreatedPatient(data: Patient) {
     this.server.emit("newPatientCreated", data)
   }
+
+  handleUpdatedPatient(data: Patient) {
+    this.server.emit("patientUpdated", data)
+  }
+  
+  handleDeletedPatient(data: Patient) {
+    this.server.emit("patientDeleted", data)
+  }
 }

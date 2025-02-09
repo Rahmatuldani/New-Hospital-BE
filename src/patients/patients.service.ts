@@ -22,15 +22,17 @@ export class PatientsService {
     return this.patientModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} patient`;
+  findOne(id: string) {
+    return this.patientModel.findById(id);
   }
 
-  update(id: number, updatePatientDto: UpdatePatientDto) {
-    return `This action updates a #${id} patient`;
+  async update(id: string, updatePatientDto: UpdatePatientDto) {
+    const updatedPatient = await this.patientModel.findByIdAndUpdate(id, updatePatientDto, {new: true}).lean().exec();
+    return updatedPatient as Patient;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} patient`;
+  async remove(id: string) {
+    const deletedPatient = await this.patientModel.findByIdAndDelete(id).lean().exec()
+    return deletedPatient as Patient;
   }
 }

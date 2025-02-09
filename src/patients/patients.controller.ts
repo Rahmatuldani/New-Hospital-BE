@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { PatientsGateway } from './patients.gateway';
+import { ValidateIdPipe } from '@/pipes/validate-id/validate-id.pipe';
 
 @Controller('patients')
 export class PatientsController {
@@ -24,17 +25,33 @@ export class PatientsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.patientsService.findOne(+id);
+  async findOne(@Param('id', ValidateIdPipe) id: string) {
+    const patient = await this.patientsService.findOne(id);
+    if (!patient) {
+      throw new NotFoundException("Patient not found")
+    }
+    return patient;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePatientDto: UpdatePatientDto) {
-    return this.patientsService.update(+id, updatePatientDto);
+  async update(@Param('id', ValidateIdPipe) id: string, @Body() updatePatientDto: UpdatePatientDto) {
+    const patient = await this.patientsService.findOne(id);
+    if (!patient) {
+      throw new NotFoundException("Patient not found")
+    }
+    const updatedPatient = await this.patientsService.update(id, updatePatientDto);
+    await this.patientsGateway.handleUpdatedPatient(updatedPatient);
+    return updatedPatient;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.patientsService.remove(+id);
+  async remove(@Param('id', ValidateIdPipe) id: string) {
+    const patient = await this.patientsService.findOne(id);
+    if (!patient) {
+      throw new NotFoundException("Patient not found")
+    }
+    const deletedPatient = await this.patientsService.remove(id);
+    await this.patientsGateway.handleDeletedPatient(deletedPatient);
+    return deletedPatient;
   }
 }
