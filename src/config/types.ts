@@ -32,3 +32,13 @@ export enum Religion {
     BUDHA = "Budha",
     KONGHUCHU = "Konghuchu"
 }
+
+export enum WorkDays {
+    MONDAY = "Monday",
+    TUESDAY = "Tuesday",
+    WEDNESDAY = "Wednesday",
+    THURSDAY = "thursday",
+    FRIDAY = "Friday",
+    SATURDAY = "Saturday",
+    SUNDAY = "Sunday"
+}
