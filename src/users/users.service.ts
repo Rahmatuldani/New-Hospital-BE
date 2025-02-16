@@ -10,14 +10,14 @@ import { Employee } from '@/employees/entities/employee.entity';
 export class UsersService {
   constructor (
     @InjectModel(User.name) private readonly userModel: Model<User>,
-    private readonly libService: LibService
+    private readonly libService: LibService,
   ) {}
   
   async create(employee: Employee): Promise<User> {
     const user = await this.userModel.create({
       np: employee.np,
       password: this.libService.hash(employee.np),
-      employee: employee._id,
+      employee: employee
     })
     return user.save();
   }

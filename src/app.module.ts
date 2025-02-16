@@ -24,10 +24,10 @@ import { UsersModule } from './users/users.module';
       })
     }),
     PatientsModule,
-    UsersModule,
+    EmployeesModule,
     LibModule,
     AuthModule,
-    EmployeesModule
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

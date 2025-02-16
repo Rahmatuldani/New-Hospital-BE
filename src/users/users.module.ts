@@ -8,7 +8,7 @@ import { LibModule } from '@/lib/lib.module';
 @Module({
   imports: [
     MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
-    LibModule
+    LibModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],

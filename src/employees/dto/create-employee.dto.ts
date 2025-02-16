@@ -1,6 +1,6 @@
 import { Gender, Role } from "@/config/types";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsNumberString, IsOptional, IsString, Length, ValidateIf } from "class-validator";
+import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsNumberString, IsString, Length } from "class-validator";
 
 export class CreateEmployeeDto {
     @ApiProperty({

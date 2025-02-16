@@ -28,6 +28,10 @@ export class EmployeesService {
   async findOne(id: string): Promise<Employee | null> {
     return await this.employeesModel.findById(id);
   }
+  
+  async findByNp(np: string): Promise<Employee | null> {
+    return await this.employeesModel.findOne({np: np});
+  }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto): Promise<Employee> {
     const updatedEmployee = await this.employeesModel.findByIdAndUpdate(id, updateEmployeeDto, {new: true}).exec()

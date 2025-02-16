@@ -13,7 +13,10 @@ export class Employee extends Document {
     @Prop({required: true})
     np: string;
 
-    @Prop({required: true})
+    @Prop({
+        required: true,
+        unique: true
+    })
     email: string;
     
     @Prop({required: true})

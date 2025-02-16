@@ -8,6 +8,7 @@ import { CreateUserDto } from './users/dto/create-user.dto';
 import { UsersService } from './users/users.service';
 import { CreateEmployeeDto } from './employees/dto/create-employee.dto';
 import { EmployeesService } from './employees/employees.service';
+import { Employee } from './employees/entities/employee.entity';
 
 @Controller()
 export class AppController {
@@ -49,24 +50,6 @@ export class AppController {
     return 'Generate patients data success'
   }
   
-  @Get("generateUsers/:sample")
-  async generateUsers(@Param('sample') sample: string) {
-    for (let index = 0; index < +sample; index++) {
-      const user: CreateUserDto = {
-        email: faker.internet.email(),
-        firstName: faker.person.firstName(),
-        lastName: faker.person.lastName(),
-        birthDate: faker.date.birthdate(),
-        birthPlace: faker.location.city(),
-        gender: faker.helpers.arrayElement(Object.values(Gender)),
-        role: faker.helpers.arrayElement(Object.values(Role)),
-      }
-      await this.usersService.create(user)
-    }
-
-    return 'Generate users data success'
-  }
-  
   @Get("generateEmployees/:sample")
   async generateEmployees(@Param('sample') sample: string) {
     for (let index = 0; index < +sample; index++) {
@@ -80,7 +63,8 @@ export class AppController {
         gender: faker.helpers.arrayElement(Object.values(Gender)),
         role: faker.helpers.arrayElement(Object.values(Role)),
       }
-      await this.employeesService.create(employee)
+      const newEmployee: Employee = await this.employeesService.create(employee)
+      await this.usersService.create(newEmployee)
     }
 
     return 'Generate employees data success'
