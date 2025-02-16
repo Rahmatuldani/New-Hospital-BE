@@ -2,14 +2,20 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } 
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { UsersService } from '@/users/users.service';
 
 @Controller('employees')
 export class EmployeesController {
-  constructor(private readonly employeesService: EmployeesService) {}
+  constructor(
+    private readonly employeesService: EmployeesService,
+    private readonly usersService: UsersService
+  ) {}
 
   @Post()
-  create(@Body() createEmployeeDto: CreateEmployeeDto) {
-    return this.employeesService.create(createEmployeeDto);
+  async create(@Body() createEmployeeDto: CreateEmployeeDto) {
+    const employee = await this.employeesService.create(createEmployeeDto);
+    await this.usersService.create(employee);
+    return employee;
   }
 
   @Get()

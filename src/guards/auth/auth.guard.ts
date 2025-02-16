@@ -2,7 +2,6 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -28,7 +27,7 @@ export class AuthGuard implements CanActivate {
           secret: this.configService.get<string>("secretKey")
         }
       )
-      request['userId'] = payload.sub
+      request['employeeId'] = payload.sub
     } catch (error) {
       console.error("Error jwt verify: ", error);
       

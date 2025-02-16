@@ -5,10 +5,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PatientsModule } from './patients/patients.module';
 import configuration from './config/configuration';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from './users/users.module';
 import { LibModule } from './lib/lib.module';
 import { AuthModule } from './auth/auth.module';
 import { EmployeesModule } from './employees/employees.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [

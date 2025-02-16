@@ -4,12 +4,14 @@ import { SignInDto } from './dto/sign-in.dto';
 import { AuthGuard } from '@/guards/auth/auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { UsersService } from '@/users/users.service';
+import { EmployeesService } from '@/employees/employees.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly employeeService: EmployeesService
   ) {}
 
   @HttpCode(HttpStatus.OK)
@@ -22,7 +24,7 @@ export class AuthController {
   @ApiBearerAuth()
   @Get('profile')
   async getProfile(@Request() req) {
-    const user = await this.usersService.findOne(req.userId)
+    const user = await this.employeeService.findOne(req['employeeId'])
     return user;
   }
 }

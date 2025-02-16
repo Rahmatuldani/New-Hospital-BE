@@ -13,14 +13,14 @@ export class AuthService {
     ) {}
 
     async signIn(signInDto: SignInDto) {
-        const user = await this.usersService.findByNP(signInDto.np);
+        const user = await this.usersService.findOne(signInDto.np);
         if (!user) {
             throw new NotFoundException('User not found')
         }
         if (!this.libService.verifyhash(signInDto.password, user.password)) {
             throw new UnauthorizedException('Wrong password')
         }
-        const payload = { sub: user._id }
+        const payload = { sub: user.employee._id }
         return {
             token: await this.jwtService.signAsync(payload)
         };

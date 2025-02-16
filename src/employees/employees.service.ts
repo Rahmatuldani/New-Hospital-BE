@@ -17,6 +17,7 @@ export class EmployeesService {
     const np: string = this.libService.generateNp(createEmployeeDto.birthDate)
     createEmployeeDto['np'] = np;
     const employee = await this.employeesModel.create(createEmployeeDto)
+
     return employee.save();
   }
 

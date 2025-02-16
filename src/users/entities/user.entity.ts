@@ -1,71 +1,29 @@
+import { Employee } from "@/employees/entities/employee.entity";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Exclude } from "class-transformer";
-import { HydratedDocument } from "mongoose";
-import { Gender, Role } from "@/config/types";
-
-export type UserDocument = HydratedDocument<User>
+import { Document, Types } from "mongoose";
 
 @Schema({
-    versionKey: false,
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 })
-export class User {
-    @Prop({required: true})
-    np: string;
-
-    @Prop({required: true, unique: true})
-    email: string;
-
-    @Prop({required: true})
-    @Exclude()
-    password: string;
-    
-    @Prop({required: true})
-    firstName: string;
-
-    @Prop({required: true})
-    lastName: string;
-
+export class User extends Document{
     @Prop({
-        type: Date,
+        type: String,
         required: true
     })
-    birthDate: Date;
-
-    @Prop({required: true})
-    birthPlace: string;
+    np: string;
 
     @Prop({
-        type: String,
-        required: true, 
-        enum: Gender
+        required: true
     })
-    gender: Gender;
+    password: string;
 
     @Prop({
-        type: String,
-        required: true, 
-        enum: Role
+        type: Types.ObjectId,
+        required: true,
+        ref: "Employee"
     })
-    role: Role;
-    
-    @Prop({
-        type: String,
-        default: null
-    })
-    photo: string | null;
-
-    @Prop({
-        type: Date,
-        default: null
-    })
-    deletedAt: Date | null;
+    employee: Employee;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User)
-UserSchema.set('toJSON', {
-    transform: (doc, ret) => {
-        delete ret.password;
-        return ret
-    }
-})
+export const UserSchema = SchemaFactory.createForClass(User);
