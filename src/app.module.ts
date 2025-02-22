@@ -9,6 +9,7 @@ import { LibModule } from './lib/lib.module';
 import { AuthModule } from './auth/auth.module';
 import { EmployeesModule } from './employees/employees.module';
 import { UsersModule } from './users/users.module';
+import { PolyclinicsModule } from './polyclinics/polyclinics.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UsersModule } from './users/users.module';
     LibModule,
     AuthModule,
     UsersModule,
+    PolyclinicsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
