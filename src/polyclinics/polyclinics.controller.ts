@@ -37,4 +37,9 @@ export class PolyclinicsController {
   remove(@Param('id', ValidateIdPipe) id: string) {
     return this.polyclinicsService.remove(id);
   }
+  
+  @Delete(':id/removeDoctor')
+  removeDoctor(@Param('id', ValidateIdPipe) id: string, @Body() body: AddPolyclinicDoctorDto) {
+    return this.polyclinicsService.removeDoctor(id, body.doctorId);
+  }
 }

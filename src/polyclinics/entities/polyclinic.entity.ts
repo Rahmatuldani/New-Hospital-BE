@@ -1,4 +1,3 @@
-import { Employee } from "@/employees/entities/employee.entity";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
 
@@ -18,7 +17,7 @@ export class Polyclinic extends Document {
         ref: "Employee",
         default: []
     })
-    doctors: Employee[];
+    doctors: string[];
 }
 
 export const PolyclinicSchema = SchemaFactory.createForClass(Polyclinic)

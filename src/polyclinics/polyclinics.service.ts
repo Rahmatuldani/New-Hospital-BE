@@ -3,7 +3,7 @@ import { AddPolyclinicDoctorDto, CreatePolyclinicDto } from './dto/create-polycl
 import { UpdatePolyclinicDto } from './dto/update-polyclinic.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Polyclinic } from './entities/polyclinic.entity';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { EmployeesService } from '@/employees/employees.service';
 import { Employee } from '@/employees/entities/employee.entity';
 import { Role } from '@/config/types';
@@ -15,12 +15,12 @@ export class PolyclinicsService {
     private readonly employeeService: EmployeesService
   ) {}
 
-  async create(createPolyclinicDto: CreatePolyclinicDto) {
+  async create(createPolyclinicDto: CreatePolyclinicDto): Promise<Polyclinic> {
     const newPoly = await this.polyclinicModel.create(createPolyclinicDto)
     return newPoly.save();
   }
 
-  async addDoctor(polyId, addPolyclinicDoctorDto: AddPolyclinicDoctorDto) {
+  async addDoctor(polyId, addPolyclinicDoctorDto: AddPolyclinicDoctorDto): Promise<Polyclinic> {
     const doctor: Employee | null = await this.employeeService.findOne(addPolyclinicDoctorDto.doctorId)
     if (!doctor || doctor.role !== Role.DOCTOR) {
       throw new NotFoundException("Doctor data not found")
@@ -38,25 +38,34 @@ export class PolyclinicsService {
     return poly.populate("doctors");
   }
 
-  findAll() {
-    return this.polyclinicModel.find().populate("doctors");
+  async findAll(): Promise<Polyclinic[]> {
+    return await this.polyclinicModel.find().populate("doctors");
   }
 
-  findOne(id: string) {
-    return this.polyclinicModel.findById(id).populate("doctors");
+  async findOne(id: string): Promise<Polyclinic> {
+    const poly = await this.polyclinicModel.findById(id);
+    if (!poly) {
+      throw new NotFoundException("Polyclincic not found")
+    }
+    return poly;
   }
 
-  async update(id: string, updatePolyclinicDto: UpdatePolyclinicDto) {
-    const updatedPoly = await this.polyclinicModel.findByIdAndUpdate(id, updatePolyclinicDto, {new: true}).populate("doctors");
-    return updatedPoly as Polyclinic;
+  async update(id: string, updatePolyclinicDto: UpdatePolyclinicDto): Promise<Polyclinic> {
+    const poly: Polyclinic = await this.findOne(id);
+    await Object.assign(poly, updatePolyclinicDto)
+    return poly.save();
+  }
+
+  async removeDoctor(id: string, doctorId: string): Promise<Polyclinic> {
+    const poly: Polyclinic = await this.findOne(id)
+    poly.doctors = poly.doctors.filter((doctor) => doctor !== doctorId)
+    
+    return await poly.save();
   }
 
   async remove(id: string) {
-    const poly = await this.findOne(id)
-    if (!poly) {
-      throw new NotFoundException("Polyclinic data not found")
-    }
-    const deletedPoly = await this.polyclinicModel.findByIdAndDelete(id).populate("doctors");
-    return deletedPoly as Polyclinic;
+    const poly: Polyclinic = await this.findOne(id)
+    await poly.deleteOne()
+    return poly;
   }
 }
