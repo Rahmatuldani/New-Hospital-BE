@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { EmployeesModule } from './employees/employees.module';
 import { UsersModule } from './users/users.module';
 import { PolyclinicsModule } from './polyclinics/polyclinics.module';
+import { WaitingListModule } from './waiting-list/waiting-list.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { PolyclinicsModule } from './polyclinics/polyclinics.module';
     AuthModule,
     UsersModule,
     PolyclinicsModule,
+    WaitingListModule,
   ],
   controllers: [AppController],
   providers: [AppService],

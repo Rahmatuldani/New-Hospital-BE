@@ -42,3 +42,10 @@ export enum WorkDays {
     SATURDAY = "Saturday",
     SUNDAY = "Sunday"
 }
+
+export enum PatientStatus {
+    EXAMINATION_WAIT = "Menunggu Pemeriksaan",
+    EXAMINATION = "Pemeriksaan",
+    PAYMENT_WAIT = "Menunggu Pembayaran",
+    MEDICINE_WAIT = "Menunggu Pengambilan Obat"
+}
