@@ -26,6 +26,10 @@ export class PatientsService {
     return this.patientModel.findById(id);
   }
 
+  findByNIK(nik: string) {
+    return this.patientModel.findOne({nik: nik});
+  }
+
   async update(id: string, updatePatientDto: UpdatePatientDto) {
     const updatedPatient = await this.patientModel.findByIdAndUpdate(id, updatePatientDto, {new: true}).lean().exec();
     return updatedPatient as Patient;

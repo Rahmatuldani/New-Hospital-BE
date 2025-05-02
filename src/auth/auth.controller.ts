@@ -11,7 +11,6 @@ import { JwtService } from '@nestjs/jwt';
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService,
     private readonly usersService: UsersService,
     private readonly employeeService: EmployeesService,
     private readonly libService: LibService,
@@ -21,11 +20,12 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post("signIn")
   async signIn(@Body() signInDto: SignInDto) {
-    const user = await this.usersService.findOne(signInDto.np);
+    const data: {np: string; password: string} = JSON.parse(this.libService.decryption(signInDto.data))
+    const user = await this.usersService.findOne(data.np);
     if (!user) {
         throw new NotFoundException('User not found')
     }
-    if (!this.libService.verifyhash(signInDto.password, user.password)) {
+    if (!this.libService.verifyhash(data.password, user.password)) {
         throw new UnauthorizedException('Wrong password')
     }
     const payload = { sub: user.employee._id }

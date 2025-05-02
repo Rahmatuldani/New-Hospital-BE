@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
-import { BloodType, PaymentMethod, Religion, Gender } from "@/config/types";
+import { BloodType, Payment, Religion, Gender } from "@/config/types";
 
 export type PatientDocument = HydratedDocument<Patient>
 
@@ -45,9 +45,9 @@ export class Patient {
     @Prop({
         type: String,
         required: true,
-        enum: PaymentMethod
+        enum: Payment
     })
-    paymentMethod: PaymentMethod;
+    payment: Payment;
 
     @Prop({
         type: String,
@@ -69,7 +69,7 @@ export class Patient {
     @Prop({
         required: true
     })
-    patientPhone: string;
+    phoneNumber: string;
 
     @Prop({
         required: true

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
@@ -14,6 +14,10 @@ export class PatientsController {
 
   @Post()
   async create(@Body() createPatientDto: CreatePatientDto) {
+    const existPatient = await this.patientsService.findByNIK(createPatientDto.nik)
+    if (existPatient) {
+      throw new BadRequestException("Patient has registered")
+    }
     const newPatient = await this.patientsService.create(createPatientDto);
     await this.patientsGateway.handleCreatedPatient(newPatient);
     return newPatient;

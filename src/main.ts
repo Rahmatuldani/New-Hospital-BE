@@ -24,7 +24,7 @@ async function bootstrap() {
     .build()
 
   const documentFactory =  SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup("", app, documentFactory)
+  SwaggerModule.setup("docs", app, documentFactory)
   
   app.enableCors();
   app.setGlobalPrefix(prefix)

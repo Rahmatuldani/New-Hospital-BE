@@ -3,7 +3,7 @@ import { AppService } from './app.service';
 import { PatientsService } from './patients/patients.service';
 import { faker } from '@faker-js/faker';
 import { CreatePatientDto } from './patients/dto/create-patient.dto';
-import { BloodType, PaymentMethod, Religion, Gender, Role } from './config/types';
+import { BloodType, Payment, Religion, Gender, Role } from './config/types';
 import { CreateUserDto } from './users/dto/create-user.dto';
 import { UsersService } from './users/users.service';
 import { CreateEmployeeDto } from './employees/dto/create-employee.dto';
@@ -35,11 +35,11 @@ export class AppController {
         birthPlace: faker.location.city(),
         address: faker.location.streetAddress(),
         bloodType: faker.helpers.arrayElement(Object.values(BloodType)),
-        paymentMethod: faker.helpers.arrayElement(Object.values(PaymentMethod)),
+        payment: faker.helpers.arrayElement(Object.values(Payment)),
         bpjs: faker.string.numeric(20),
         job: faker.person.jobTitle(),
         partner: faker.person.fullName(),
-        patientPhone: faker.string.numeric(12),
+        phoneNumber: faker.string.numeric(12),
         partnerPhone: faker.string.numeric(12),
         partnerAddress: faker.location.streetAddress(),
         religion: faker.helpers.arrayElement(Object.values(Religion)),

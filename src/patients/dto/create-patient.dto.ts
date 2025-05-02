@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsDateString, IsEnum, IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
-import { BloodType, PaymentMethod, Religion, Gender } from "@/config/types";
+import { IsDateString, IsEnum, IsIn, IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validator";
+import { BloodType, Payment, Religion, Gender } from "@/config/types";
 
 export class CreatePatientDto {
     @ApiProperty({
@@ -47,20 +47,20 @@ export class CreatePatientDto {
     address: string;
 
     @ApiProperty({
-        enum: BloodType,
+        enum: [...Object.values(BloodType), "-"],
         nullable: true
     })
-    @IsString()
-    @IsEnum(BloodType)
     @IsOptional()
+    @IsString()
+    @IsIn([...Object.values(BloodType), "-"])
     bloodType: BloodType | null;
 
     @ApiProperty({
-        enum: PaymentMethod
+        enum: Payment
     })
     @IsString()
     @IsNotEmpty()
-    paymentMethod: PaymentMethod;
+    payment: Payment;
 
     @ApiProperty({
         example: ""
@@ -90,7 +90,7 @@ export class CreatePatientDto {
     })
     @IsNumberString()
     @IsNotEmpty()
-    patientPhone: string
+    phoneNumber: string
     
     @ApiProperty({
         example: ""

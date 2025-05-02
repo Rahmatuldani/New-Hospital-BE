@@ -19,7 +19,7 @@ export enum BloodType {
     O = 'O'
 }
 
-export enum PaymentMethod {
+export enum Payment {
     CASH = 'Cash',
     BPJS = 'BPJS'
 }

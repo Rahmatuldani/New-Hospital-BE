@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     
     const token = this.extractTokenFromHeader(request)
     if (!token) {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException("Required authorization token")
     }
 
     try {
@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
     } catch (error) {
       console.error("Error jwt verify: ", error);
       
-      throw new UnauthorizedException();
+      throw new UnauthorizedException("Invalid token");
     }
 
     return true;
