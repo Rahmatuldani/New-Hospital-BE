@@ -2,11 +2,10 @@ import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { Patient } from './entities/patient.entity';
 
-@WebSocketGateway(80, {
+@WebSocketGateway({
   cors: {
     origin: "*"
-  },
-  transports: ['websocket']
+  }
 })
 export class PatientsGateway {
   @WebSocketServer() server: Server;
