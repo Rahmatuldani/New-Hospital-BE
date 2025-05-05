@@ -2,14 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, B
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
-// import { PatientsGateway } from './patients.gateway';
+import { PatientsGateway } from './patients.gateway';
 import { ValidateIdPipe } from '@/pipes/validate-id/validate-id.pipe';
 
 @Controller('patients')
 export class PatientsController {
   constructor(
     private readonly patientsService: PatientsService,
-    // private readonly patientsGateway: PatientsGateway
+    private readonly patientsGateway: PatientsGateway
   ) {}
 
   @Post()
@@ -19,7 +19,7 @@ export class PatientsController {
       throw new BadRequestException("Patient has registered")
     }
     const newPatient = await this.patientsService.create(createPatientDto);
-    // await this.patientsGateway.handleCreatedPatient(newPatient);
+    await this.patientsGateway.handleCreatedPatient(newPatient);
     return newPatient;
   }
 
@@ -44,7 +44,7 @@ export class PatientsController {
       throw new NotFoundException("Patient not found")
     }
     const updatedPatient = await this.patientsService.update(id, updatePatientDto);
-    // await this.patientsGateway.handleUpdatedPatient(updatedPatient);
+    await this.patientsGateway.handleUpdatedPatient(updatedPatient);
     return updatedPatient;
   }
 
@@ -55,7 +55,7 @@ export class PatientsController {
       throw new NotFoundException("Patient not found")
     }
     const deletedPatient = await this.patientsService.remove(id);
-    // await this.patientsGateway.handleDeletedPatient(deletedPatient);
+    await this.patientsGateway.handleDeletedPatient(deletedPatient);
     return deletedPatient;
   }
 }
