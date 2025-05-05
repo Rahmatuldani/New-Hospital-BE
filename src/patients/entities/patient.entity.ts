@@ -57,29 +57,36 @@ export class Patient {
     
     @Prop({
         type: String,
-        default: null
+        default: null,
+        nullable: true
     })
     job: string | null;
 
     @Prop({
-        required: true
+        type: String,
+        nullable: true,
+        default: null
     })
-    partner: string;
+    partner: string | null;
 
     @Prop({
-        required: true
+        type:String,
+        nullable: true,
+        default: null,
     })
-    phoneNumber: string;
+    phoneNumber: string | null;
 
     @Prop({
-        required: true
+        type: String,
+        nullable: true
     })
-    partnerPhone: string;
+    partnerPhone: string | null;
 
     @Prop({
-        required: true
+        type: String,
+        nullable: true
     })
-    partnerAddress: string;
+    partnerAddress: string | null;
 
     @Prop({
         type: String,

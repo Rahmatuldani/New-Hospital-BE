@@ -66,7 +66,7 @@ export class CreatePatientDto {
         example: ""
     })
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     job: string
     
     @ApiPropertyOptional({
@@ -82,29 +82,29 @@ export class CreatePatientDto {
         example: ""
     })
     @IsString()
-    @IsNotEmpty()
-    partner: string
+    @IsOptional()
+    partner: string | null
     
     @ApiProperty({
         example: ""
     })
     @IsNumberString()
-    @IsNotEmpty()
+    @IsOptional()
     phoneNumber: string
     
     @ApiProperty({
         example: ""
     })
     @IsNumberString()
-    @IsNotEmpty()
-    partnerPhone: string
+    @IsOptional()
+    partnerPhone: string | null;
     
     @ApiProperty({
         example: ""
     })
     @IsString()
-    @IsNotEmpty()
-    partnerAddress: string
+    @IsOptional()
+    partnerAddress: string | null;
     
     @ApiProperty({
         enum: Religion
